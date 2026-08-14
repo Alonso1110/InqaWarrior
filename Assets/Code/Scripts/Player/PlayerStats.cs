@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField] public int level { get; private set; }
     [SerializeField] public int suyo { get; private set; }
+
+    public event Action<int> OnHealthChange;
+    public event Action<int> OnDamageChange;
+    public event Action<int> OnCashChange;
 
     void Awake()
     {
@@ -32,14 +37,17 @@ public class PlayerStats : MonoBehaviour
     public void AddHP(int amount)
     {
         playerHealthPoints += amount;
+        OnHealthChange?.Invoke(playerHealthPoints);
     }
     public void AddDmgPoints(int amount)
     {
         playerDamagePoints += amount;
+        OnDamageChange?.Invoke(playerDamagePoints);
     }
     public void AddCash(int amount)
     {
         playerCash += amount;
+        OnCashChange?.Invoke(playerCash);
     }
 
     public bool ReduceHPandCheckVitals(int amount)
@@ -48,10 +56,12 @@ public class PlayerStats : MonoBehaviour
         if (newTotal > 0)
         {
             playerHealthPoints = newTotal;
+            OnHealthChange?.Invoke(playerHealthPoints);
         }
         else
         {
             playerHealthPoints = 0;
+            OnHealthChange?.Invoke(playerHealthPoints);
             return false;
         }
         return true;
@@ -67,6 +77,7 @@ public class PlayerStats : MonoBehaviour
         {
             playerDamagePoints = 0;
         }
+        OnDamageChange?.Invoke(playerDamagePoints);
     }
     public bool CheckCashToSpend(int amount)
     {
@@ -74,6 +85,7 @@ public class PlayerStats : MonoBehaviour
         if (newTotal >= 0)
         {
             playerDamagePoints = newTotal;
+            OnCashChange?.Invoke(playerCash);
             return true;
         }
         return false;
