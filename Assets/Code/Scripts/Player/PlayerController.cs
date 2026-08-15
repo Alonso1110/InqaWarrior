@@ -29,6 +29,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
 
+    [Header("Animations")]
+    [SerializeField] private Animator bodyAnim;
+    [SerializeField] private Animator bottomAnim;
+    [SerializeField] private Animator capeAnim;
+
     [Header("Verifications")]
     private bool wannaJump = false;
     private bool gotHit = false;
@@ -89,41 +94,33 @@ public class PlayerController : MonoBehaviour
     {
         if (gotHit)
         {
-            currentState = PlayerStates.Hurt;
-            gotHit = false;
-
-            PlayerStats.Instance.ReduceHPandCheckVitals(dmgTaken);
-
-            renderer.color = Color.red;
-            GameFeelManager.Instance.FreezeFrame(HurtSkipingSeconds);
-
+            SwitchToState(PlayerStates.Hurt);
             return; 
         }
 
         switch (currentState)
         {
             case PlayerStates.Idle:
-                if (!isGrounded) currentState = PlayerStates.Falling;
-                else if (moveInputDirX != 0) currentState = PlayerStates.Running;
-                else if (wannaJump) SwitchToJumpingState();
+                if (!isGrounded) SwitchToState(PlayerStates.Falling);
+                else if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
+                else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Running:
-                if (!isGrounded) currentState = PlayerStates.Falling;
-                else if (movementScript.completelyStop) currentState = PlayerStates.Idle;
-                else if (wannaJump) SwitchToJumpingState();
+                if (!isGrounded) SwitchToState(PlayerStates.Falling);
+                else if (movementScript.completelyStop) SwitchToState(PlayerStates.Idle);
+                else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Jumping:
-                if (!movementScript.stillRaising()) currentState = PlayerStates.Falling;
+                if (!movementScript.stillRaising()) SwitchToState(PlayerStates.Falling);
                 break;
             case PlayerStates.Falling:
                 if (CheckGround())
                 {
-                    if (movementScript.completelyStop) currentState = PlayerStates.Idle;
-                    else currentState = PlayerStates.Running;
+                    if (movementScript.completelyStop) SwitchToState(PlayerStates.Idle);
+                    else SwitchToState(PlayerStates.Running);
                 }
                 break;
             case PlayerStates.Hurt:
-                StartCoroutine(StunTime());
                 break;
         }
     }
@@ -162,12 +159,46 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SwitchToJumpingState()
+    private void SwitchToState(PlayerStates newState)
     {
-        currentState = PlayerStates.Jumping;
-        movementScript.Jump();
+        currentState = newState;
 
-        wannaJump = false;
+        switch (newState)
+        {
+            case PlayerStates.Idle:
+                bodyAnim.Play("idle");
+                bottomAnim.Play("idle");
+                break;
+            case PlayerStates.Running:
+                bodyAnim.Play("run");
+                bottomAnim.Play("run");
+                break;
+            case PlayerStates.Jumping:
+                bodyAnim.Play("jump");
+                bottomAnim.Play("fall");
+
+                movementScript.Jump();
+
+                wannaJump = false;
+                break;
+            case PlayerStates.Falling:
+                bodyAnim.Play("fall");
+                bottomAnim.Play("fall");
+                break;
+            case PlayerStates.Hurt:
+                gotHit = false;
+
+                PlayerStats.Instance.ReduceHPandCheckVitals(dmgTaken);
+
+                renderer.color = Color.red;
+                GameFeelManager.Instance.FreezeFrame(HurtSkipingSeconds);
+
+                StartCoroutine(StunTime());
+                break;
+            default:
+                break;
+        }
+
     }
 
     public void TakeDamage(int dmg)

@@ -110,7 +110,8 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
 
-            float waitTime = (Random.Range(1f, 4f) + 2f) / 3f;
+            float waitTime = (Random.Range(
+                1f, 4f) + 2f) / 3f;
             yield return new WaitForSeconds(waitTime);
         }
     }

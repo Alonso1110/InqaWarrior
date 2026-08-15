@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 562189f525437ad488f1929c74956ec5
+guid: ce642d6fe20f08247ba72108196429fc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,12 +110,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inka_idle_0
+      name: inka_fall_superior_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 40
+        width: 144
         height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -124,19 +124,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87fa3b0ca9487aa409c04e68170ae303
-      internalID: 1102809587
+      spriteID: a426204158bdb8e4c955ab494091f274
+      internalID: -385330081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_idle_1
+      name: inka_fall_superior_1
       rect:
         serializedVersion: 2
-        x: 40
+        x: 144
         y: 0
-        width: 40
+        width: 144
         height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -145,19 +145,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51238969d47af5b4d9089d31bb200ba9
-      internalID: 155253446
+      spriteID: 06749a3240e830941b41c12956b909f5
+      internalID: 317165572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_idle_2
+      name: inka_fall_superior_2
       rect:
         serializedVersion: 2
-        x: 80
+        x: 288
         y: 0
-        width: 40
+        width: 144
         height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -166,19 +166,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 717aa5bac71330742bc331072c4e302e
-      internalID: -1689188281
+      spriteID: e2b0b185aee4d544fa5cf83be17bbecf
+      internalID: -1631679655
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_idle_3
+      name: inka_fall_superior_3
       rect:
         serializedVersion: 2
-        x: 120
+        x: 432
         y: 0
-        width: 40
+        width: 144
         height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -187,19 +187,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d974c05b8623054ea60f3b264e851f4
-      internalID: 1975832161
+      spriteID: 343154b7bb4996d43ba5adc356f313bb
+      internalID: 30575990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_idle_4
+      name: inka_fall_superior_4
       rect:
         serializedVersion: 2
-        x: 160
+        x: 576
         y: 0
-        width: 40
+        width: 144
         height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -208,8 +208,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b743b70bb3458ab4f8a8bedb800419d3
-      internalID: 931797879
+      spriteID: b0fe482ca168faa4fa7006b65620ac45
+      internalID: 160213827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inka_fall_superior_5
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8137040b6b8d264b9bff808424017bb
+      internalID: -1270895789
       vertices: []
       indices: 
       edges: []
@@ -225,11 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      inka_idle_0: 1102809587
-      inka_idle_1: 155253446
-      inka_idle_2: -1689188281
-      inka_idle_3: 1975832161
-      inka_idle_4: 931797879
+      inka_fall_superior_0: -385330081
+      inka_fall_superior_1: 317165572
+      inka_fall_superior_2: -1631679655
+      inka_fall_superior_3: 30575990
+      inka_fall_superior_4: 160213827
+      inka_fall_superior_5: -1270895789
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
