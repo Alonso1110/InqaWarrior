@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour
         Running,
         Jumping,
         Falling,
-        Attacking,
+        IdleAttacking,
+        RunAttacking,
+        FallAttacking,
         Hurt,
         Dying
     }
@@ -33,9 +35,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator bodyAnim;
     [SerializeField] private Animator bottomAnim;
     [SerializeField] private Animator capeAnim;
+    [SerializeField] private Animator smearAnim;
 
     [Header("Verifications")]
     private bool wannaJump = false;
+    private bool wannaAttack = false;
     private bool gotHit = false;
 
     [Header("GameFeel")]
@@ -67,6 +71,18 @@ public class PlayerController : MonoBehaviour
         if (context.canceled && currentState == PlayerStates.Jumping)
         {
             movementScript.CutJump();
+        }
+    }
+
+    public void OnAttackIntent(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            wannaAttack = true;
+        }
+        if (context.canceled)
+        {
+            wannaAttack = false;
         }
     }
 
@@ -102,6 +118,7 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerStates.Idle:
                 if (!isGrounded) SwitchToState(PlayerStates.Falling);
+                else if (wannaAttack) SwitchToState(PlayerStates.IdleAttacking);
                 else if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
@@ -121,6 +138,15 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case PlayerStates.Hurt:
+                break;
+            case PlayerStates.IdleAttacking:
+                if (!wannaAttack)
+                {
+                    SwitchToState(PlayerStates.Idle);
+                    smearAnim.Play("smearIdle");
+
+                }
+                else if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
                 break;
         }
     }
@@ -161,8 +187,6 @@ public class PlayerController : MonoBehaviour
 
     private void SwitchToState(PlayerStates newState)
     {
-        currentState = newState;
-
         switch (newState)
         {
             case PlayerStates.Idle:
@@ -195,9 +219,17 @@ public class PlayerController : MonoBehaviour
 
                 StartCoroutine(StunTime());
                 break;
+            case PlayerStates.IdleAttacking:
+                bodyAnim.Play("idleAttack1a");
+                bottomAnim.Play("idleAttack1a");
+                smearAnim.Play("smearAttack");
+                break;
             default:
                 break;
         }
+
+
+        currentState = newState;
 
     }
 

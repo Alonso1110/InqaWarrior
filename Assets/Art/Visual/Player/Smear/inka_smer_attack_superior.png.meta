@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cc6b4d9727cd9f54698e5753e20d7606
+guid: c46617c34f9c765488770b0868a2b01e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inka_attack_run_superior_0
+      name: inka_smer_attack_superior_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03010b44047a9ea4784f191c541fdc98
-      internalID: -1407034546
+      spriteID: 02e2cd55c6f9c4c4ca85a8bf4a3d51a7
+      internalID: 585720724
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_1
+      name: inka_smer_attack_superior_1
       rect:
         serializedVersion: 2
         x: 144
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f70ecb8df68245649a1bc4816e1b91a9
-      internalID: 177063655
+      spriteID: b38b983c84af7104ca2cd6cdb71f6725
+      internalID: 976420672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_2
+      name: inka_smer_attack_superior_2
       rect:
         serializedVersion: 2
         x: 288
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b705bdc08cc7d5241ab9b99ade27e0a1
-      internalID: -2065615665
+      spriteID: 67a1797a8f037eb4a851fb1910addc21
+      internalID: -1603778059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_3
+      name: inka_smer_attack_superior_3
       rect:
         serializedVersion: 2
         x: 432
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8caeb28300fa58343a6d5ed51c54d0f1
-      internalID: 653826542
+      spriteID: 0e8b40fea3464554ab86c3534e75e32c
+      internalID: 2043548652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_4
+      name: inka_smer_attack_superior_4
       rect:
         serializedVersion: 2
         x: 576
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 174ffc9fbd1032a47894f28fa0e5bfc4
-      internalID: 608912543
+      spriteID: afb9acb62d017c74389a4d30725582ef
+      internalID: -2854496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_5
+      name: inka_smer_attack_superior_5
       rect:
         serializedVersion: 2
         x: 720
@@ -229,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c7ea313f28154342a01780492800cb4
-      internalID: 164598699
+      spriteID: 14b48fd63f701c64898027266f3df0ab
+      internalID: 1823183184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_6
+      name: inka_smer_attack_superior_6
       rect:
         serializedVersion: 2
         x: 864
@@ -250,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fc1a6a8c7e36b74cabc41e8ce81c97d
-      internalID: -429243445
+      spriteID: fa019a70633482f4a955b0d34d73ea7c
+      internalID: -368619109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_7
+      name: inka_smer_attack_superior_7
       rect:
         serializedVersion: 2
         x: 1008
@@ -271,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d6ded42471053b4384f8444f28778d5
-      internalID: 735390908
+      spriteID: e31e1c338ff9fda4f815630ef327bc1c
+      internalID: -360932214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inka_attack_run_superior_8
+      name: inka_smer_attack_superior_8
       rect:
         serializedVersion: 2
         x: 1152
@@ -292,29 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fcba7e957fb266409efa9b325a4f806
-      internalID: 1310714834
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inka_attack_run_superior_9
-      rect:
-        serializedVersion: 2
-        x: 1296
-        y: 0
-        width: 144
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64d98961add435f4dac18e533b9998df
-      internalID: 2099060454
+      spriteID: 1982346f4777e4c4592f1958dc32e1eb
+      internalID: 472880717
       vertices: []
       indices: 
       edges: []
@@ -330,16 +309,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      inka_attack_run_superior_0: -1407034546
-      inka_attack_run_superior_1: 177063655
-      inka_attack_run_superior_2: -2065615665
-      inka_attack_run_superior_3: 653826542
-      inka_attack_run_superior_4: 608912543
-      inka_attack_run_superior_5: 164598699
-      inka_attack_run_superior_6: -429243445
-      inka_attack_run_superior_7: 735390908
-      inka_attack_run_superior_8: 1310714834
-      inka_attack_run_superior_9: 2099060454
+      inka_smer_attack_superior_0: 585720724
+      inka_smer_attack_superior_1: 976420672
+      inka_smer_attack_superior_2: -1603778059
+      inka_smer_attack_superior_3: 2043548652
+      inka_smer_attack_superior_4: -2854496
+      inka_smer_attack_superior_5: 1823183184
+      inka_smer_attack_superior_6: -368619109
+      inka_smer_attack_superior_7: -360932214
+      inka_smer_attack_superior_8: 472880717
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
