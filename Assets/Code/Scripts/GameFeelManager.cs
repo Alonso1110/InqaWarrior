@@ -32,11 +32,33 @@ public class GameFeelManager : MonoBehaviour
     private IEnumerator DoFreeze(float duration)
     {
         isFrozen = true;
-        Time.timeScale = 0f; // Pausa el tiempo
+        Time.timeScale = 0f; 
 
-        yield return new WaitForSecondsRealtime(duration); // Espera en tiempo real
+        yield return new WaitForSecondsRealtime(duration);
 
-        Time.timeScale = 1f; // Reanuda el tiempo
+        Time.timeScale = 1f;
+        isFrozen = false;
+    }
+
+    #endregion
+
+    #region Slow Frame Logic
+    public void SlowFrame(float duration, float speed)
+    {
+        if (!isFrozen)
+        {
+            StartCoroutine(DoSlow(duration, speed));
+        }
+    }
+
+    private IEnumerator DoSlow(float duration, float speed)
+    {
+        isFrozen = true;
+        Time.timeScale = speed; 
+
+        yield return new WaitForSecondsRealtime(duration); 
+
+        Time.timeScale = 1f;
         isFrozen = false;
     }
 

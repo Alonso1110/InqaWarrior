@@ -22,12 +22,18 @@ public class HurtBoxLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerBrain != null) 
+        if (logicOwner == LogicOwners.Player)
         {
-            if (collision.CompareTag("EnemyBullet"))
+            if (playerBrain != null)
             {
-                playerBrain.TakeDamage(PlayerStats.Instance.suyo);
+                if (collision.CompareTag("EnemyBullet"))
+                {
+                    playerBrain.TakeDamage(PlayerStats.Instance.suyo);
+                }
             }
+        } else if (logicOwner == LogicOwners.Enemy)
+        {
+
         }
     }
 }

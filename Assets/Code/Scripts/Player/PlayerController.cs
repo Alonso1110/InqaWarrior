@@ -46,11 +46,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float HurtSkipingSeconds = 0.25f;
 
     private PlayerMovement movementScript;
+    private PlayerAttack attackScript;
     private SpriteRenderer renderer;
 
     void Awake()
     {
         movementScript = GetComponent<PlayerMovement>();
+        attackScript = GetComponent<PlayerAttack>();
         renderer = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -118,13 +120,21 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerStates.Idle:
                 if (!isGrounded) SwitchToState(PlayerStates.Falling);
-                else if (wannaAttack) SwitchToState(PlayerStates.IdleAttacking);
-                else if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
+                else if (wannaAttack)
+                {
+                    SwitchToState(PlayerStates.Idle);
+                }
+                else if (moveInputDirX != 0)
+                {
+                    bodyAnim.Play("run_idle");
+                    bottomAnim.Play("run_idle");
+                    SwitchToState(PlayerStates.Running);
+                }
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Running:
                 if (!isGrounded) SwitchToState(PlayerStates.Falling);
-                else if (movementScript.completelyStop) SwitchToState(PlayerStates.Idle);
+                else if (moveInputDirX == 0) SwitchToState(PlayerStates.Idle);
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Jumping:
@@ -140,13 +150,7 @@ public class PlayerController : MonoBehaviour
             case PlayerStates.Hurt:
                 break;
             case PlayerStates.IdleAttacking:
-                if (!wannaAttack)
-                {
-                    SwitchToState(PlayerStates.Idle);
-                    smearAnim.Play("smearIdle");
-
-                }
-                else if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
+                //if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
                 break;
         }
     }
@@ -168,6 +172,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
     private void ExecuteFixedCurrentState()
     {
         switch (currentState)
@@ -190,12 +195,10 @@ public class PlayerController : MonoBehaviour
         switch (newState)
         {
             case PlayerStates.Idle:
-                bodyAnim.Play("idle");
-                bottomAnim.Play("idle");
                 break;
             case PlayerStates.Running:
-                bodyAnim.Play("run");
-                bottomAnim.Play("run");
+                bodyAnim.Play("idle_run");
+                bottomAnim.Play("idle_run");
                 break;
             case PlayerStates.Jumping:
                 bodyAnim.Play("jump");
@@ -223,6 +226,7 @@ public class PlayerController : MonoBehaviour
                 bodyAnim.Play("idleAttack1a");
                 bottomAnim.Play("idleAttack1a");
                 smearAnim.Play("smearAttack");
+                attackScript.Attack();
                 break;
             default:
                 break;
@@ -246,5 +250,11 @@ public class PlayerController : MonoBehaviour
         renderer.color = Color.white;
         currentState = PlayerStates.Idle;
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
+    }
+
 }

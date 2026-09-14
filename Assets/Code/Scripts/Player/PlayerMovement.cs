@@ -28,16 +28,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    //private void OnEnable()
-    //{
-    //    playerControls.Enable();
-    //}
-    //private void OnDisable()
-    //{
-    //    playerControls.Disable();
-    //}
-
-
     public void TurningX(float Xdir)
     {
         if (Xdir == 0) return;
