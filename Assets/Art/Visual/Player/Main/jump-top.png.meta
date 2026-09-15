@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1256bf8ef03b1614d8f63a1d41b60887
+guid: 8c9a7253e4234094b8b178db69513e1b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fall-top_0
+      name: jump-top_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a819c0b0a1e2e94e9834a0a589ea33e
-      internalID: 1394746760
+      spriteID: ccb7b9093cea19d43af5fd0310c17c1a
+      internalID: 258154097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_1
+      name: jump-top_1
       rect:
         serializedVersion: 2
         x: 144
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1785d8ac5541e7e4a82412f94584afee
-      internalID: -167995762
+      spriteID: 6c24d962b6c0ee84db191098d9723e6c
+      internalID: 967386353
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_2
+      name: jump-top_2
       rect:
         serializedVersion: 2
         x: 288
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41c0161b5deb0a24c89ae4883bda5b7c
-      internalID: -1900007058
+      spriteID: 5ed7563c4028b1740a9a41117688f610
+      internalID: -1584488150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_3
+      name: jump-top_3
       rect:
         serializedVersion: 2
         x: 432
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8a2995f301209e45bc50c5b0069ad68
-      internalID: -1585866325
+      spriteID: 5f9bc7d97e5302847ac158c18b14aaf5
+      internalID: -1607499683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_4
+      name: jump-top_4
       rect:
         serializedVersion: 2
         x: 576
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97ac4f08063bbfe479b731dd2e53a068
-      internalID: 176684028
+      spriteID: 5fcd661bfd3481e469c77ba9b910d3bd
+      internalID: 76227931
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_5
+      name: jump-top_5
       rect:
         serializedVersion: 2
         x: 720
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 650fcf985ec59884b986e44bb95c467a
-      internalID: -458693489
+      spriteID: e2819a00481d86e43a61c7ee2e96fd64
+      internalID: 1070227223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall-top_6
+      name: jump-top_6
       rect:
         serializedVersion: 2
         x: 864
@@ -237,8 +237,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf2b7b5922c2b2b4c8a4b4e4ebd61790
-      internalID: -1878666132
+      spriteID: c1e99da4a4ac51c44914dc61598d1566
+      internalID: -592884313
       vertices: []
       indices: 
       edges: []
@@ -254,13 +254,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Fall-top_0: 1394746760
-      Fall-top_1: -167995762
-      Fall-top_2: -1900007058
-      Fall-top_3: -1585866325
-      Fall-top_4: 176684028
-      Fall-top_5: -458693489
-      Fall-top_6: -1878666132
+      jump-top_0: 258154097
+      jump-top_1: 967386353
+      jump-top_2: -1584488150
+      jump-top_3: -1607499683
+      jump-top_4: 76227931
+      jump-top_5: 1070227223
+      jump-top_6: -592884313
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
