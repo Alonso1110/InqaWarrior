@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         if (gotHit)
         {
+            attackScript.InterruptAttack();
             SwitchToState(PlayerStates.Hurt);
             return; 
         }
@@ -119,26 +120,46 @@ public class PlayerController : MonoBehaviour
         switch (currentState)
         {
             case PlayerStates.Idle:
-                if (!isGrounded) SwitchToState(PlayerStates.Falling);
+                if (!isGrounded)
+                {
+                    bodyAnim.Play("ToFall");
+                    bottomAnim.Play("None");
+                }
                 else if (wannaAttack)
                 {
-                    SwitchToState(PlayerStates.Idle);
+                    SwitchToState(PlayerStates.IdleAttacking);
                 }
                 else if (moveInputDirX != 0)
                 {
-                    bodyAnim.Play("run_idle");
-                    bottomAnim.Play("run_idle");
-                    SwitchToState(PlayerStates.Running);
+                    bodyAnim.Play("IdleToRun");
+                    bottomAnim.Play("None");
+                    currentState = PlayerStates.Running;
                 }
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Running:
-                if (!isGrounded) SwitchToState(PlayerStates.Falling);
-                else if (moveInputDirX == 0) SwitchToState(PlayerStates.Idle);
+                if (!isGrounded)
+                {
+                    bodyAnim.Play("ToFall");
+                    bottomAnim.Play("None");
+                }
+                else if (wannaAttack)
+                {
+                    SwitchToState(PlayerStates.IdleAttacking);
+                }
+                else if (moveInputDirX == 0)
+                {
+                    bodyAnim.Play("RunToIdle");
+                    bottomAnim.Play("None");
+                }
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Jumping:
-                if (!movementScript.stillRaising()) SwitchToState(PlayerStates.Falling);
+                if (!movementScript.stillRaising())
+                {
+                    bodyAnim.Play("ToFall");
+                    bottomAnim.Play("None");
+                }
                 break;
             case PlayerStates.Falling:
                 if (CheckGround())
@@ -190,27 +211,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SwitchToState(PlayerStates newState)
+    public void SwitchToState(PlayerStates newState)
     {
         switch (newState)
         {
             case PlayerStates.Idle:
+                bodyAnim.Play("Idle");
+                bottomAnim.Play("None");
                 break;
             case PlayerStates.Running:
-                bodyAnim.Play("idle_run");
-                bottomAnim.Play("idle_run");
+                bodyAnim.Play("Run");
+                bottomAnim.Play("Run");
                 break;
             case PlayerStates.Jumping:
-                bodyAnim.Play("jump");
-                bottomAnim.Play("fall");
+                bodyAnim.Play("Jump");
+                bottomAnim.Play("Fall");
 
                 movementScript.Jump();
 
                 wannaJump = false;
                 break;
             case PlayerStates.Falling:
-                bodyAnim.Play("fall");
-                bottomAnim.Play("fall");
+                bodyAnim.Play("Fall");
+                bottomAnim.Play("Fall");
                 break;
             case PlayerStates.Hurt:
                 gotHit = false;
@@ -235,6 +258,16 @@ public class PlayerController : MonoBehaviour
 
         currentState = newState;
 
+    }
+
+    public void EndAttack()
+    {
+        if (currentState == PlayerStates.IdleAttacking || 
+            currentState == PlayerStates.RunAttacking ||
+            currentState == PlayerStates.FallAttacking)
+        {
+            SwitchToState(PlayerStates.Idle);
+        }
     }
 
     public void TakeDamage(int dmg)

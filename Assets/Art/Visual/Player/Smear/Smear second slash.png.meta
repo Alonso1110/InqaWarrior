@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -100,7 +113,7 @@ TextureImporter:
       name: Smear second slash_0
       rect:
         serializedVersion: 2
-        x: 432
+        x: 0
         y: 0
         width: 144
         height: 56
@@ -121,7 +134,7 @@ TextureImporter:
       name: Smear second slash_1
       rect:
         serializedVersion: 2
-        x: 576
+        x: 144
         y: 0
         width: 144
         height: 56
@@ -142,7 +155,7 @@ TextureImporter:
       name: Smear second slash_2
       rect:
         serializedVersion: 2
-        x: 720
+        x: 288
         y: 0
         width: 144
         height: 56
@@ -155,6 +168,69 @@ TextureImporter:
       bones: []
       spriteID: b0fa7d08385902041b79bb9359ee46b5
       internalID: -1700378660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smear second slash_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4f20ca6ce25358459ebee3a2f1dfdf0
+      internalID: -1439946135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smear second slash_4
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43f596739d93dcf46bc0c829f134ed4c
+      internalID: -2038596548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Smear second slash_5
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f260ffc21e68a49468e364dd68707ae6
+      internalID: 1248296298
       vertices: []
       indices: 
       edges: []
@@ -173,6 +249,9 @@ TextureImporter:
       Smear second slash_0: -1601223578
       Smear second slash_1: 1609744230
       Smear second slash_2: -1700378660
+      Smear second slash_3: -1439946135
+      Smear second slash_4: -2038596548
+      Smear second slash_5: 1248296298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
