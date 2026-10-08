@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eaaf2358a70bd654c9c861848c93ddbe
-      internalID: -461551768
+      spriteID: 2cbe95e33334a444e93f2017efe75bb4
+      internalID: 1370544689
       vertices: []
       indices: 
       edges: []
@@ -132,8 +132,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7caf955a5e3ba84ca422dd3b5f311c8
-      internalID: -2103725231
+      spriteID: a5569cf19f2149a4dac6cd16a3f21153
+      internalID: -149139872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JumpToFall_2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 349ebc10d3c80f348a926cefa54924c2
+      internalID: 73145128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JumpToFall_3
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 144
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22aa1341975bc8346bab1c132dd56fe6
+      internalID: -318121265
       vertices: []
       indices: 
       edges: []
@@ -149,8 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      JumpToFall_0: -461551768
-      JumpToFall_1: -2103725231
+      JumpToFall_0: 1370544689
+      JumpToFall_1: -149139872
+      JumpToFall_2: 73145128
+      JumpToFall_3: -318121265
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
