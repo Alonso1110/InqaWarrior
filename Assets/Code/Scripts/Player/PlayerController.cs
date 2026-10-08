@@ -159,13 +159,38 @@ public class PlayerController : MonoBehaviour
                 {
                     bodyAnim.Play("ToFall");
                     bottomAnim.Play("None");
+                    if (isGrounded)
+                    {
+                        if (movementScript.completelyStop)
+                        {
+                            bodyAnim.Play("FallToIdle");
+                            bottomAnim.Play("None", 0, 0);
+                            currentState = PlayerStates.Idle;
+                        }
+                        else
+                        {
+                            bodyAnim.Play("FallToRun");
+                            bottomAnim.Play("None", 0, 0);
+                            currentState = PlayerStates.Running;
+                        }
+                    }
                 }
                 break;
             case PlayerStates.Falling:
-                if (CheckGround())
+                if (isGrounded)
                 {
-                    if (movementScript.completelyStop) SwitchToState(PlayerStates.Idle);
-                    else SwitchToState(PlayerStates.Running);
+                    if (movementScript.completelyStop)
+                    {
+                        bodyAnim.Play("FallToIdle");
+                        bottomAnim.Play("None",0,0);
+                        currentState = PlayerStates.Idle;
+                    }
+                    else
+                    {
+                        bodyAnim.Play("FallToRun");
+                        bottomAnim.Play("None",0,0);
+                        currentState = PlayerStates.Running;
+                    }
                 }
                 break;
             case PlayerStates.Hurt:
