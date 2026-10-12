@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 808446770259408166}
   - component: {fileID: 635937331078505723}
   - component: {fileID: 6078216256571314259}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Conquer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

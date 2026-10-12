@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform meleeOrigin;
     [SerializeField] private float maxMeleeRadius = 2;
     [SerializeField] private float meleeDmgTime = 1;
+    [SerializeField] private float melee2DmgTime = 1;
 
     private float currentMeleeRadius = 0;
 
@@ -35,9 +36,13 @@ public class PlayerAttack : MonoBehaviour
         currentMeleeRadius = 0;
     }
 
-    public void Attack()
+    public void Attack(PlayerAttacks attackType)
     {
-        activeAttackRoutine = StartCoroutine(ExpandingMeleeAttackRoutine());
+        currentAttack = attackType;
+        InterruptAttack();
+
+        if (currentAttack == PlayerAttacks.Melee1 || currentAttack == PlayerAttacks.Melee2)
+            activeAttackRoutine = StartCoroutine(ExpandingMeleeAttackRoutine(attackType));
     }
 
 
@@ -52,30 +57,33 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private IEnumerator ExpandingMeleeAttackRoutine()
+    private IEnumerator ExpandingMeleeAttackRoutine(PlayerAttacks attackType)
     {
         float timer = 0f;
         currentMeleeRadius = 0f;
 
+        float attackDuration = (attackType == PlayerAttacks.Melee1) ? meleeDmgTime : melee2DmgTime;
+        float dmgMultiplier = (attackType == PlayerAttacks.Melee2) ? 1.25f : 1.0f;
+
         HashSet<Collider2D> enemiesHit = new HashSet<Collider2D>();
 
-        while (timer < meleeDmgTime)
+        while (timer < attackDuration)
         {
             timer += Time.deltaTime;
 
-            currentMeleeRadius = Mathf.Lerp(0f, maxMeleeRadius, timer / meleeDmgTime);
+            currentMeleeRadius = Mathf.Lerp(0f, maxMeleeRadius, timer / attackDuration);
 
-            MeleeDetect(enemiesHit);
+            MeleeDetect(enemiesHit, dmgMultiplier);
 
             yield return null;
         }
 
         currentMeleeRadius = 0f;
 
-        playerController.EndAttack();
+        playerController.EndMeleeAttack();
     }
 
-    private void MeleeDetect(HashSet<Collider2D> alreadyHitEnemies)
+    private void MeleeDetect(HashSet<Collider2D> alreadyHitEnemies, float damageMultiplier)
     {
         Collider2D[] enemiesRange = Physics2D.OverlapCircleAll(meleeOrigin.position, currentMeleeRadius, enemyMask);
         foreach (Collider2D enemy in enemiesRange)

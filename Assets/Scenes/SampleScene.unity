@@ -224,6 +224,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7981226438271846876, guid: cec97a9b12db93047be33de47357fe2d, type: 3}
   m_PrefabInstance: {fileID: 201577992}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &219963146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6425499896208216013, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
+  m_PrefabInstance: {fileID: 5273082609484862229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &219963150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219963146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f0e7e4eabbe2d449d493cf268794d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &237809772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21306,6 +21323,10 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1405892116773873109, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
+      propertyPath: melee2DmgTime
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1405892116773873109, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
       propertyPath: maxMeleeRadius
       value: 0.4
       objectReference: {fileID: 0}
@@ -21373,6 +21394,10 @@ PrefabInstance:
       propertyPath: checkRadius
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7450160410205632867, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 372521663b1f8de45919f30636a76f92, type: 2}
     - target: {fileID: 7631350877175661633, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
       propertyPath: m_Controller
       value: 
@@ -21388,10 +21413,10 @@ PrefabInstance:
     - target: {fileID: 8882408031925527655, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1909210073, guid: 1feb5692c7fdf2b4386a1d2ec1d2928a, type: 3}
     - target: {fileID: 8882408031925527655, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21400,6 +21425,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2104163004144350820, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
       insertIndex: -1
       addedObject: {fileID: 554581164}
+    - targetCorrespondingSourceObject: {fileID: 6425499896208216013, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 219963150}
   m_SourcePrefab: {fileID: 100100000, guid: 520863570fd91984ba9e0b6a9e1b7667, type: 3}
 --- !u!1001 &7676138946057471297
 PrefabInstance:

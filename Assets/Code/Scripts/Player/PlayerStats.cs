@@ -14,6 +14,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public int level { get; private set; }
     [SerializeField] public int suyo { get; private set; }
 
+    [Header("Final Screen Specs")]
+    [SerializeField] private int SpanishMurdered = 0;
+    [SerializeField] private int GoldRecovered = 0;
+    [SerializeField] private float TimeSpentTillVictory = 0f;
+
     public event Action<int> OnHealthChange;
     public event Action<int> OnDamageChange;
     public event Action<int> OnCashChange;
@@ -47,6 +52,7 @@ public class PlayerStats : MonoBehaviour
     public void AddCash(int amount)
     {
         playerCash += amount;
+        GoldRecovered += amount;
         OnCashChange?.Invoke(playerCash);
     }
 

@@ -38,9 +38,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator smearAnim;
 
     [Header("Verifications")]
-    private bool wannaJump = false;
-    private bool wannaAttack = false;
-    private bool gotHit = false;
+    private bool gotHit;
+    public bool wannaAttack { get; private set; }
+    public bool wannaJump { get; private set;}
 
     [Header("GameFeel")]
     [SerializeField] private float HurtSkipingSeconds = 0.25f;
@@ -54,6 +54,10 @@ public class PlayerController : MonoBehaviour
         movementScript = GetComponent<PlayerMovement>();
         attackScript = GetComponent<PlayerAttack>();
         renderer = GetComponentInChildren<SpriteRenderer>();
+
+        wannaAttack = false;
+        gotHit = false;
+        wannaJump = false;
     }
 
     public void OnMoveIntent(InputAction.CallbackContext context)
@@ -145,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (wannaAttack)
                 {
-                    SwitchToState(PlayerStates.IdleAttacking);
+                    SwitchToState(PlayerStates.RunAttacking);
                 }
                 else if (moveInputDirX == 0)
                 {
@@ -174,6 +178,9 @@ public class PlayerController : MonoBehaviour
                             currentState = PlayerStates.Running;
                         }
                     }
+                } else if (wannaAttack)
+                {
+                    SwitchToState(PlayerStates.FallAttacking); 
                 }
                 break;
             case PlayerStates.Falling:
@@ -191,12 +198,53 @@ public class PlayerController : MonoBehaviour
                         bottomAnim.Play("None",0,0);
                         currentState = PlayerStates.Running;
                     }
+                } else if (wannaAttack)
+                {
+                    SwitchToState(PlayerStates.FallAttacking); 
                 }
                 break;
             case PlayerStates.Hurt:
                 break;
             case PlayerStates.IdleAttacking:
-                //if (moveInputDirX != 0) SwitchToState(PlayerStates.Running);
+                if (!isGrounded)
+                {
+                    bottomAnim.Play("Fall");
+                    currentState = PlayerStates.FallAttacking;
+                }
+                else if (moveInputDirX != 0)
+                {
+                    bottomAnim.Play("Run");
+                    currentState = PlayerStates.RunAttacking;
+                }
+                break;
+            case PlayerStates.RunAttacking:
+                if (!isGrounded)
+                {
+                    bottomAnim.Play("Fall");
+                    currentState = PlayerStates.FallAttacking;
+                }
+                else if (movementScript.completelyStop)
+                {
+                    bottomAnim.Play("Attack1");
+                    currentState = PlayerStates.IdleAttacking;
+                }
+                break;
+            case PlayerStates.FallAttacking:
+                if (isGrounded)
+                {
+                    if (movementScript.completelyStop)
+                    {
+                        bottomAnim.Play("Attack1");
+                        currentState = PlayerStates.IdleAttacking;
+                    }
+                    else
+                    {
+                        bottomAnim.Play("Run");
+                        currentState = PlayerStates.RunAttacking;
+                    }
+                }
+                break;
+            default:
                 break;
         }
     }
@@ -216,6 +264,8 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerStates.Falling:
                 break;
+            default:
+                break;
         }
     }
 
@@ -223,15 +273,20 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
+            case PlayerStates.IdleAttacking:
             case PlayerStates.Idle:
                 movementScript.StopAllMovement();
                 break;
+            case PlayerStates.RunAttacking:
             case PlayerStates.Running:
                 movementScript.MovementX(moveInputDirX);
                 break;
             case PlayerStates.Jumping:
+            case PlayerStates.FallAttacking:
             case PlayerStates.Falling:
                 movementScript.MovementX(moveInputDirX);
+                break;
+            default:
                 break;
         }
     }
@@ -271,10 +326,19 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(StunTime());
                 break;
             case PlayerStates.IdleAttacking:
-                bodyAnim.Play("idleAttack1a");
-                bottomAnim.Play("idleAttack1a");
-                smearAnim.Play("smearAttack");
-                attackScript.Attack();
+                bodyAnim.Play("Attack1");
+                bottomAnim.Play("Attack1");
+                smearAnim.Play("Smear1", 0, 0);
+                break;
+            case PlayerStates.RunAttacking:
+                bodyAnim.Play("Attack1");
+                bottomAnim.Play("Run");
+                smearAnim.Play("Smear1", 0, 0);
+                break;
+            case PlayerStates.FallAttacking:
+                bodyAnim.Play("Attack1");
+                bottomAnim.Play("Fall");
+                smearAnim.Play("Smear1", 0, 0);
                 break;
             default:
                 break;
@@ -285,13 +349,57 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void EndAttack()
+    public void StartMeleeAttack(bool combo)
     {
-        if (currentState == PlayerStates.IdleAttacking || 
-            currentState == PlayerStates.RunAttacking ||
-            currentState == PlayerStates.FallAttacking)
+        if (!combo) attackScript.Attack(PlayerAttack.PlayerAttacks.Melee1);
+        else attackScript.Attack(PlayerAttack.PlayerAttacks.Melee2);
+    }
+
+    public void EndMeleeAttack()
+    {
+        Debug.Log("Termino ataque");
+        Debug.Log(attackScript.currentAttack == PlayerAttack.PlayerAttacks.Melee2);
+        if (!wannaAttack || attackScript.currentAttack == PlayerAttack.PlayerAttacks.Melee2)
         {
-            SwitchToState(PlayerStates.Idle);
+            Debug.Log("Desactivo ataque");
+            attackScript.currentAttack = PlayerAttack.PlayerAttacks.Melee1;
+            switch (currentState)
+            {
+                case PlayerStates.IdleAttacking:
+                    Debug.Log("Voy a Idle");
+                    SwitchToState(PlayerStates.Idle);
+                    break;
+                case PlayerStates.RunAttacking:
+                    SwitchToState(PlayerStates.Running);
+                    break;
+                case PlayerStates.FallAttacking:
+                    SwitchToState(PlayerStates.Falling);
+                    break;
+                default:
+                    break;
+            }
+        } else
+        {
+            switch (currentState)
+            {
+                case PlayerStates.IdleAttacking:
+                    bodyAnim.Play("Attack2");
+                    bottomAnim.Play("Attack2");
+                    smearAnim.Play("Smear2", 0, 0);
+                    break;
+                case PlayerStates.RunAttacking:
+                    bodyAnim.Play("Attack2");
+                    bottomAnim.Play("Run");
+                    smearAnim.Play("Smear2", 0, 0);
+                    break;
+                case PlayerStates.FallAttacking:
+                    bodyAnim.Play("Attack2");
+                    bottomAnim.Play("Fall");
+                    smearAnim.Play("Smear2", 0, 0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

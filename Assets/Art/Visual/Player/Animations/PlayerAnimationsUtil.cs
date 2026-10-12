@@ -17,4 +17,7 @@ public class PlayerAnimationsUtil : MonoBehaviour
     {
         playerController.SwitchToState(newState);
     }
+
+    public void ActivateMelee() => playerController.StartMeleeAttack(false);
+    public void ActivateMeleeCombo() => playerController.StartMeleeAttack(true);
 }
