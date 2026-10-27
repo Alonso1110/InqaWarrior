@@ -29,7 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float checkRadius = 0.5f;
     [SerializeField] private LayerMask groundLayer;
-    private bool isGrounded;
+    private bool isGrounded; 
+    private bool wasGrounded;
 
     [Header("Animations")]
     [SerializeField] private Animator bodyAnim;
@@ -47,17 +48,21 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMovement movementScript;
     private PlayerAttack attackScript;
-    private SpriteRenderer renderer;
+    private SpriteRenderer[] renderers;
 
     void Awake()
     {
         movementScript = GetComponent<PlayerMovement>();
         attackScript = GetComponent<PlayerAttack>();
-        renderer = GetComponentInChildren<SpriteRenderer>();
+        renderers = GetComponentsInChildren<SpriteRenderer>();
 
         wannaAttack = false;
         gotHit = false;
         wannaJump = false;
+    }
+    private void Start()
+    {
+        SwitchToState(PlayerStates.Jumping);
     }
 
     public void OnMoveIntent(InputAction.CallbackContext context)
@@ -67,16 +72,20 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpIntent(InputAction.CallbackContext context)
     {
-        // Le preguntamos a los músculos si estamos tocando el suelo
+        // Le preguntamos a los mÃºsculos si estamos tocando el suelo
         if (context.started && isGrounded)
         {
             wannaJump = true;
         }
 
-        // Le preguntamos a los músculos nuestra velocidad en Y
-        if (context.canceled && currentState == PlayerStates.Jumping)
+        // Le preguntamos a los mÃºsculos nuestra velocidad en Y
+        if (context.canceled)
         {
-            movementScript.CutJump();
+            wannaJump = false ;
+            if (currentState == PlayerStates.Jumping)
+            {
+                movementScript.CutJump();
+            }
         }
     }
 
@@ -127,7 +136,7 @@ public class PlayerController : MonoBehaviour
                 if (!isGrounded)
                 {
                     bodyAnim.Play("ToFall");
-                    bottomAnim.Play("None");
+                    bottomAnim.Play("None", 0, 0);
                 }
                 else if (wannaAttack)
                 {
@@ -136,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 else if (moveInputDirX != 0)
                 {
                     bodyAnim.Play("IdleToRun");
-                    bottomAnim.Play("None");
+                    bottomAnim.Play("None",0,0);
                     currentState = PlayerStates.Running;
                 }
                 else if (wannaJump) SwitchToState(PlayerStates.Jumping);
@@ -145,26 +154,27 @@ public class PlayerController : MonoBehaviour
                 if (!isGrounded)
                 {
                     bodyAnim.Play("ToFall");
-                    bottomAnim.Play("None");
+                    bottomAnim.Play("None", 0, 0);
                 }
                 else if (wannaAttack)
                 {
                     SwitchToState(PlayerStates.RunAttacking);
                 }
+                else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 else if (moveInputDirX == 0)
                 {
                     bodyAnim.Play("RunToIdle");
-                    bottomAnim.Play("None");
+                    bottomAnim.Play("None", 0, 0);
                 }
-                else if (wannaJump) SwitchToState(PlayerStates.Jumping);
                 break;
             case PlayerStates.Jumping:
                 if (!movementScript.stillRaising())
                 {
                     bodyAnim.Play("ToFall");
-                    bottomAnim.Play("None");
+                    bottomAnim.Play("None", 0, 0);
                     if (isGrounded)
                     {
+                        movementScript.LandSquash();
                         if (movementScript.completelyStop)
                         {
                             bodyAnim.Play("FallToIdle");
@@ -186,6 +196,7 @@ public class PlayerController : MonoBehaviour
             case PlayerStates.Falling:
                 if (isGrounded)
                 {
+                    movementScript.LandSquash();
                     if (movementScript.completelyStop)
                     {
                         bodyAnim.Play("FallToIdle");
@@ -251,6 +262,8 @@ public class PlayerController : MonoBehaviour
 
     private void ExecuteCurrentState()
     {
+        movementScript.ReadjustScale();
+
         switch (currentState)
         {
             case PlayerStates.Idle:
@@ -297,7 +310,7 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerStates.Idle:
                 bodyAnim.Play("Idle");
-                bottomAnim.Play("None");
+                bottomAnim.Play("None", 0, 0);
                 break;
             case PlayerStates.Running:
                 bodyAnim.Play("Run");
@@ -320,7 +333,7 @@ public class PlayerController : MonoBehaviour
 
                 PlayerStats.Instance.ReduceHPandCheckVitals(dmgTaken);
 
-                renderer.color = Color.red;
+                foreach(SpriteRenderer visual in renderers) visual.color = Color.red;
                 GameFeelManager.Instance.FreezeFrame(HurtSkipingSeconds);
 
                 StartCoroutine(StunTime());
@@ -413,7 +426,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(HurtSkipingSeconds/10);
 
-        renderer.color = Color.white;
+        foreach (SpriteRenderer visual in renderers) visual.color = Color.white;
         currentState = PlayerStates.Idle;
     }
 

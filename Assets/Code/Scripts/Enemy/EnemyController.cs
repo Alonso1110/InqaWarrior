@@ -23,6 +23,9 @@ public class EnemyController : MonoBehaviour
     private Transform player;
 
     [SerializeField] private float verticalDetection = 3;
+    [SerializeField] private float stunTime = 1;
+
+    private Coroutine OnHitRoutine;
     void Start()
     {
         movementScript = GetComponent<EnemyMovement>();
@@ -44,8 +47,7 @@ public class EnemyController : MonoBehaviour
     {
         float heightDifference = Mathf.Abs(player.position.y - transform.position.y);
 
-        // Si estamos muertos o recibiendo daño, no cambiamos a patrullar ni atacar
-        //if (currentState == EnemyStates.death || currentState == EnemyStates.onHit) return;
+        if (currentState == EnemyStates.isDying || currentState == EnemyStates.isOnHit) return;
         switch (currentState)
         {
             case EnemyStates.isPatrolling:
@@ -77,5 +79,44 @@ public class EnemyController : MonoBehaviour
                 movementScript.Targeting();
                 break;
         }
+    }
+
+    public void OnHit()
+    {
+        if (currentState != EnemyStates.isDying)
+        {
+            currentState = EnemyStates.isOnHit;
+            if (movementScript != null)
+            {
+                movementScript.StopMoving(); 
+            }
+            Debug.Log("Enemigo aturdido por el golpe.");
+            if (OnHitRoutine != null) StopCoroutine(OnHitRoutine);
+            OnHitRoutine = StartCoroutine(RecoverFromHit()); 
+        }
+    }
+
+    IEnumerator RecoverFromHit()
+    {
+        SpriteRenderer render = GetComponent<SpriteRenderer>();
+        render.color = Color.red;
+        yield return new WaitForSeconds(stunTime);
+        if (currentState != EnemyStates.isDying)
+        {
+            currentState = EnemyStates.isPatrolling;
+            render.color = Color.gray;
+        }
+        
+    }
+
+    public void Die()
+    {
+        currentState = EnemyStates.isDying;
+        GetComponent<SpriteRenderer>().color = Color.black;
+        if (movementScript != null)
+        {
+            movementScript.StopMoving();
+        }
+        Debug.Log("Enemigo cambiando al estado isDying.");
     }
 }

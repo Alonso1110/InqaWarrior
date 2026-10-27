@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float maxMeleeRadius = 2;
     [SerializeField] private float meleeDmgTime = 1;
     [SerializeField] private float melee2DmgTime = 1;
+    [SerializeField] private float comboDmgMultiplier = 1.25f;
 
     private float currentMeleeRadius = 0;
 
@@ -63,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
         currentMeleeRadius = 0f;
 
         float attackDuration = (attackType == PlayerAttacks.Melee1) ? meleeDmgTime : melee2DmgTime;
-        float dmgMultiplier = (attackType == PlayerAttacks.Melee2) ? 1.25f : 1.0f;
+        float dmgMultiplier = (attackType == PlayerAttacks.Melee2) ? comboDmgMultiplier : 1;
 
         HashSet<Collider2D> enemiesHit = new HashSet<Collider2D>();
 
@@ -73,6 +74,7 @@ public class PlayerAttack : MonoBehaviour
 
             currentMeleeRadius = Mathf.Lerp(0f, maxMeleeRadius, timer / attackDuration);
 
+            Debug.Log("Multi : " + dmgMultiplier + " | BaseDmg : " + PlayerStats.Instance.playerDamagePoints);
             MeleeDetect(enemiesHit, dmgMultiplier);
 
             yield return null;
@@ -85,14 +87,26 @@ public class PlayerAttack : MonoBehaviour
 
     private void MeleeDetect(HashSet<Collider2D> alreadyHitEnemies, float damageMultiplier)
     {
+        Debug.Log("MELEEEEE");
         Collider2D[] enemiesRange = Physics2D.OverlapCircleAll(meleeOrigin.position, currentMeleeRadius, enemyMask);
         foreach (Collider2D enemy in enemiesRange)
         {
+            Debug.Log("MELEEEEE 2!");
             if (!alreadyHitEnemies.Contains(enemy))
             {
-                alreadyHitEnemies.Add(enemy); 
+                alreadyHitEnemies.Add(enemy);
 
-                // TODO: Aquí va tu lógica para hacer daño al enemigo.
+                EnemyStats stats = enemy.GetComponent<EnemyStats>();
+
+                if (stats != null)
+                {
+                    int finalDamage = Mathf.RoundToInt(PlayerStats.Instance.playerDamagePoints * damageMultiplier);
+                    stats.TakeDamage(finalDamage);
+                } else
+                {
+                    IInteractable interactable = enemy.GetComponent<IInteractable>();
+                    if (interactable != null) interactable.Interact();
+                }
                 Debug.Log("¡Golpeado: " + enemy.name + "!");
             }
         }

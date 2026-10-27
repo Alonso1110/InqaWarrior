@@ -17,6 +17,10 @@ public class UpdateStatsUI : MonoBehaviour
         PlayerStats.Instance.OnHealthChange += UpdateHPInUI;
         PlayerStats.Instance.OnDamageChange += UpdateDmgInUI;
         PlayerStats.Instance.OnCashChange += UpdateCashInUI;
+
+        UpdateHPInUI(PlayerStats.Instance.playerHealthPoints);
+        UpdateDmgInUI(PlayerStats.Instance.playerDamagePoints);
+        UpdateCashInUI(PlayerStats.Instance.playerCash);
     }
 
     private void OnDisable()

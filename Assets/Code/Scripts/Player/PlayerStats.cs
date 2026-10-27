@@ -6,13 +6,24 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; private set; }
+    public enum Stats
+    {
+        HP,
+        Dmg,
+        Cash
+    }
 
-    [SerializeField] private int playerHealthPoints;
-    [SerializeField] private int playerDamagePoints;
-    [SerializeField] public int playerCash { get; private set; }
+    [SerializeField] private int initialHP;
+    [SerializeField] private int initialDmg;
+    [SerializeField] private int initialCash;
 
-    [SerializeField] public int level { get; private set; }
-    [SerializeField] public int suyo { get; private set; }
+    public int playerHealthPoints { get; private set; }
+    public int playerDamagePoints { get; private set; }
+    public int playerCash { get; private set; }
+
+    public int level { get; private set; }
+    public int suyo { get; private set; }
+    public int roomsWithoutFight { get; private set; }
 
     [Header("Final Screen Specs")]
     [SerializeField] private int SpanishMurdered = 0;
@@ -32,9 +43,9 @@ public class PlayerStats : MonoBehaviour
         } 
         else Destroy(gameObject);
 
-        playerHealthPoints = 5;
-        playerDamagePoints = 2;
-        playerCash = 0;
+        playerHealthPoints = initialHP;
+        playerDamagePoints = initialDmg;
+        playerCash = initialCash;
         level = 1;
         suyo = 1;
 
@@ -87,15 +98,34 @@ public class PlayerStats : MonoBehaviour
     }
     public bool CheckCashToSpend(int amount)
     {
-        int newTotal = playerDamagePoints - amount;
+        int newTotal = playerCash - amount;
         if (newTotal >= 0)
         {
-            playerDamagePoints = newTotal;
+            playerCash = newTotal;
             OnCashChange?.Invoke(playerCash);
             return true;
         }
         return false;
 
+    }
+
+    public void AddByStat(Stats modifiedStat, int amount)
+    {
+        switch (modifiedStat)
+        {
+            case Stats.HP: AddHP(amount); break;
+            case Stats.Dmg: AddDmgPoints(amount); break;
+            case Stats.Cash: AddCash(amount); break;
+            default: break;
+        }
+    }
+
+    public void ResetRoomsWithoutFight() => roomsWithoutFight = 0;
+    public void OneMoreRoomWithoutFight() => roomsWithoutFight++;
+
+    private void KillConfirmed()
+    {
+        SpanishMurdered++;
     }
 
 }

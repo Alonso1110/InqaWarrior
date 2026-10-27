@@ -38,7 +38,7 @@ public class ConquerorAttack : EnemyAttack
         }
 
         movement.TurnToPlayer();
-        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().color = Color.gray;
 
         StartCoroutine(base.PerformAttackRoutine());
     }

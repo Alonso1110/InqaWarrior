@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float accel = 0.6f;
     [SerializeField] private float decel = 0.4f;
     [SerializeField] private float turnSpd = 0.8f;
+    [SerializeField] private Transform LogicBoxesTransform;
 
     [Header("Vertical Movement")]
     [SerializeField] private float jumpForce = 18f; //Define initial impulse
@@ -18,6 +19,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = 3f;
     [SerializeField] private float fallingVariation = 1.5f;
 
+    [Header("Squash & Stretch")]
+    [SerializeField] private Transform visualTransform;
+    [SerializeField] private Vector2 jumpStretchScale = new Vector2(0.7f, 1.3f); // X delgado, Y alto
+    [SerializeField] private Vector2 landSquashScale = new Vector2(1.3f, 0.7f);  // X ancho, Y bajito
+    [SerializeField] private float scaleReturnSpeed = 10f;
+
+    private Vector3 baseScale; 
+    private float currentFacingX = 1f;
 
     [Header("Components")]
     private Rigidbody2D rb;
@@ -26,14 +35,18 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        baseScale = visualTransform.localScale;
     }
 
     public void TurningX(float Xdir)
     {
         if (Xdir == 0) return;
-        Vector3 scale = transform.localScale;
-        transform.localScale = new Vector3(Xdir, scale.y, scale.z);
-    } 
+        currentFacingX = Mathf.Sign(Xdir);
+
+        Vector3 currentScale = visualTransform.localScale;
+        visualTransform.localScale = new Vector3(Mathf.Abs(currentScale.x) * currentFacingX, currentScale.y, currentScale.z);
+        LogicBoxesTransform.localScale = new Vector3(currentFacingX, 1, 1);
+    }
 
     public void MovementX(float Xdir)
     {
@@ -74,6 +87,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         rb.gravityScale = gravity * fallingVariation;
+
+        visualTransform.localScale = new Vector3(jumpStretchScale.x * currentFacingX, jumpStretchScale.y, baseScale.z);
+        
     }
 
     public void CutJump()
@@ -82,5 +98,15 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpSoftVariation);
         }
+    }
+
+    public void LandSquash()
+    {
+        //visualTransform.localScale = new Vector3(landSquashScale.x * currentFacingX, landSquashScale.y, baseScale.z);
+    }
+    public void ReadjustScale()
+    {
+        Vector3 targetScale = new Vector3(baseScale.x * currentFacingX, baseScale.y, baseScale.z);
+        visualTransform.localScale = Vector3.Lerp(visualTransform.localScale, targetScale, Time.deltaTime * scaleReturnSpeed);
     }
 }
